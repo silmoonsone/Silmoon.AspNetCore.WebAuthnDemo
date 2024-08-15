@@ -1,0 +1,62 @@
+﻿@page
+@model Silmoon.AspNetCore.Demo.KeyAuth.Pages.SignupModel
+@{
+    ViewData["Title"] = "Signup";
+}
+
+<div>Signup</div>
+<hr />
+<div>
+    <div>
+        <div class="py-3">
+            <label for="username">Username</label>
+            <input class="form-control" id="username" placeholder="Please input username" />
+        </div>
+        <div class="py-3">
+            <label for="password">Password</label>
+            <input class="form-control" type="password" id="password" placeholder="Please input password" />
+        </div>
+        <div class="py-3">
+            <label for="retypepassword">Retype password</label>
+            <input class="form-control" type="password" id="retypepassword" placeholder="Please input password again" />
+        </div>
+        <div>
+            <button class="btn btn-primary" id="signup" onclick="doSignup()">Signup</button>
+            <a class="btn" href="~/Signin">Signin</a>
+        </div>
+    </div>
+</div>
+
+<script>
+    //use fetch post formdata to /doSignup signup data
+    function doSignup() {
+        var username = $("#username").val();
+        var password = $("#password").val();
+        var retypepassword = $("#retypepassword").val();
+        if (password != retypepassword) {
+            alert("Password not match");
+            return;
+        }
+        var data = new FormData();
+        data.append("Username", username);
+        data.append("Password", password);
+        data.append("Retypepassword", retypepassword);
+        fetch("/doSignup", {
+            method: "POST",
+            body: data
+        }).then(response => {
+            if (response.ok) {
+                response.json().then(data => {
+                    if (data.Success) {
+                        alert("SUCCESS!")
+                        window.location.href = "/Signin";
+                    } else {
+                        alert("Failed:\r\n" + data.Message);
+                    }
+                });
+            } else {
+                alert("Signup error");
+            }
+        });
+    }
+</script>

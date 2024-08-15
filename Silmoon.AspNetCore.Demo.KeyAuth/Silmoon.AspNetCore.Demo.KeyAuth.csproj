@@ -2,8 +2,21 @@
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
-    <Nullable>enable</Nullable>
+    <Nullable>annotations</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Silmoon" Version="1.4.3" />
+    <PackageReference Include="Silmoon.AspNetCore" Version="1.4.1" />
+    <PackageReference Include="Silmoon.Data.MongoDB" Version="1.4.1" />
+    <PackageReference Include="Silmoon.Extension" Version="1.4.4" />
+    <PackageReference Include="PeterO.Cbor" Version="4.5.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="8.0.8" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Silmoon.Data.LiteDB\Silmoon.Data.LiteDB\Silmoon.Data.LiteDB.csproj" />
+  </ItemGroup>
 
 </Project>

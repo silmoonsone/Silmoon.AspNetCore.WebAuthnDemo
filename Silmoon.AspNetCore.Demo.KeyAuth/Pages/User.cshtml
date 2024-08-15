@@ -1,0 +1,148 @@
+﻿@page
+@using Silmoon.AspNetCore.Demo.KeyAuth.Models.SubModels
+@using Silmoon.Extension
+@model Silmoon.AspNetCore.Demo.KeyAuth.Pages.UserModel
+@{
+    ViewData["Title"] = "User";
+    UserWebAuthnInfo[] userWebAuthnInfos = ViewBag.UserWebAuthnInfos as UserWebAuthnInfo[];
+}
+
+<div>User</div>
+<hr />
+<div>
+    <div class="d-flex justify-content-between align-items-center">
+        <div>
+            <div class="small text-secondary">username</div>
+            <div class="text-primary fw-bold">@User.Identity.Name</div>
+        </div>
+        <div>
+            <button class="btn btn-primary btn-sm" id="enroll">Add passkey</button>
+            <button class="btn btn-primary btn-sm" id="signout" onclick="signout()">Signout</button>
+        </div>
+    </div>
+    <hr />
+    <div>
+        @if (userWebAuthnInfos.IsNullOrEmpty())
+        {
+            <div class="small text-secondary">No any passkey.</div>
+        }
+        else
+        {
+            @foreach (var item in userWebAuthnInfos)
+            {
+                <div class="card shadow p-3 my-3">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <span class="mark">[@item.PublicKeyAlgorithm]</span>
+                            <span class="mark">[@item.AuthenticatorAttachment]</span>
+                            <span>@item.CredentialId.GetBase64String()</span>
+                        </div>
+                        <div>
+                            <button class="btn btn-sm btn-danger deleteButton" onclick="deleteWebAuthn('@item.CredentialId.GetBase64String()')">DELETE</button>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#enroll').click(async function () {
+            try {
+                // 1. 向服务器请求创建挑战 (challenge) 和 RP 信息
+                const response = await fetch('/getWebAuthnOptions');
+                const options = await response.json();
+
+                // 2. 将 challenge 和 user.id 转换为 Uint8Array
+                options.challenge = Uint8Array.from(atob(options.challenge), c => c.charCodeAt(0));
+                options.user.id = Uint8Array.from(atob(options.user.id), c => c.charCodeAt(0));
+                options.timeout = 120000;
+
+                // 3. 创建密钥对
+                const credential = await navigator.credentials.create({
+                    publicKey: options
+                });
+
+                // 4. 获取相关信息
+                const attestationObject = new Uint8Array(credential.response.attestationObject);
+                const clientDataJSON = new Uint8Array(credential.response.clientDataJSON);
+                const rawId = new Uint8Array(credential.rawId);
+
+                const data = {
+                    rawId: Array.from(rawId),
+                    type: credential.type,
+                    authenticatorAttachment: credential.authenticatorAttachment,
+                    response: {
+                        attestationObject: Array.from(attestationObject),
+                        clientDataJSON: Array.from(clientDataJSON),
+                    },
+                };
+
+                // 6. 将数据发送到服务器进行注册
+                const registerResponse = await fetch('/addWebAuthn', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                if (registerResponse.ok) {
+                    registerResponse.json().then(data => {
+                        if (data.Success) {
+                            alert('注册成功');
+                            location.reload();
+                        } else {
+                            alert('注册失败 ' + data.Message);
+                        }
+                    });
+                } else {
+                    alert('注册失败 ERR');
+                }
+            } catch (err) {
+                console.error(err);
+                alert('注册过程中出错');
+            }
+        });
+    });
+
+    function deleteWebAuthn(credentialId) {
+        if (confirm('确定删除？')) {
+            var data = new FormData();
+            data.append("CredentialId", credentialId);
+            fetch("/deleteWebAuthn", {
+                method: "POST",
+                body: data
+            }).then(response => {
+                if (response.ok) {
+                    response.json().then(data => {
+                        if (data.Success) {
+                            alert("SUCCESS!")
+                            window.location.href = "/User";
+                        } else {
+                            alert("Failed:\r\n" + data.Message);
+                        }
+                    });
+                } else {
+                    alert("Delete error");
+                }
+            });
+        }
+    }
+    function signout() {
+        if (confirm('确定退出吗？')) {
+            fetch("/doSignout", {
+                method: "GET"
+            }).then(response => {
+                if (response.ok) {
+                    window.location.href = "/signin";
+                } else {
+                    alert("Signout error");
+                }
+            });
+        }
+    }
+</script>

@@ -1,0 +1,54 @@
+﻿@page
+@model Silmoon.AspNetCore.Demo.KeyAuth.Pages.SigninModel
+@{
+    ViewData["Title"] = "Signin";
+}
+
+<div>Signin</div>
+<hr />
+<div>
+    <div>
+        <div class="py-3">
+            <label for="username">Username</label>
+            <input class="form-control" id="username" placeholder="Please input username" />
+        </div>
+        <div class="py-3">
+            <label for="password">Password</label>
+            <input class="form-control" type="password" id="password" placeholder="Please input password" />
+        </div>
+        <div>
+            <button class="btn btn-primary" id="signin" onclick="doSignin()">Signin</button>
+            <a class="btn" href="~/Signup">Signup</a>
+        </div>
+    </div>
+</div>
+
+<script>
+    //use fetch post formdata to /doSignup signup data
+    function doSignin() {
+        var username = $("#username").val();
+        var password = $("#password").val();
+
+        var data = new FormData();
+        data.append("Username", username);
+        data.append("Password", password);
+        fetch("/doSignin", {
+            method: "POST",
+            body: data
+        }).then(response => {
+            if (response.ok) {
+                response.json().then(data => {
+                    if (data.Success) {
+                        alert("SUCCESS!")
+                        window.location.href = "/User";
+                    } else {
+                        alert("Failed:\r\n" + data.Message);
+                    }
+                });
+            } else {
+                alert("Signup error");
+            }
+        });
+    }
+</script>
+

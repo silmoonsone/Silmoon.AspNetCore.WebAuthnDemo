@@ -1,7 +1,12 @@
+using Silmoon.AspNetCore.Demo.KeyAuth;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+builder.Services.AddControllers().AddNewtonsoftJson();
+builder.Services.AddAuthentication().AddCookie();
+builder.Services.AddSingleton<Core>();
 
 var app = builder.Build();
 
@@ -20,6 +25,9 @@ app.UseRouting();
 
 app.UseAuthorization();
 
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Home}/{action=Index}");
 app.MapRazorPages();
 
 app.Run();
