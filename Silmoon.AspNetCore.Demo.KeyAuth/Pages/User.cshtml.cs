@@ -21,6 +21,7 @@ namespace Silmoon.AspNetCore.Demo.KeyAuth.Pages
             UserObjectId = ObjectId.Parse(User.Claims.Where(x => x.Type == ClaimTypes.NameIdentifier).FirstOrDefault().Value);
             UserWebAuthnInfos = Core.GetUserWebAuthnInfos(UserObjectId);
             ViewData["UserWebAuthnInfos"] = UserWebAuthnInfos;
+            ViewData["UserObjectId"] = UserObjectId;
         }
     }
 }

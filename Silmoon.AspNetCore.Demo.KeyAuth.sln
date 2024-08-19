@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.35122.118
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Silmoon.AspNetCore.Demo.KeyAuth", "Silmoon.AspNetCore.Demo.KeyAuth\Silmoon.AspNetCore.Demo.KeyAuth.csproj", "{D1E547DB-8F0F-4CDA-AF81-F815453D1D8B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Silmoon.AspNetCore.Demo.KeyAuth", "Silmoon.AspNetCore.Demo.KeyAuth\Silmoon.AspNetCore.Demo.KeyAuth.csproj", "{D1E547DB-8F0F-4CDA-AF81-F815453D1D8B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "解决方案项", "解决方案项", "{BEDB62C6-CDDB-496E-A45C-2C1387A75E26}"
 	ProjectSection(SolutionItems) = preProject
@@ -13,6 +13,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "解决方案项", "解决�
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Silmoon.Data.LiteDB", "..\Silmoon.Data.LiteDB\Silmoon.Data.LiteDB\Silmoon.Data.LiteDB.csproj", "{0ECBA900-A4A3-4AB9-A38F-FE1E7AFB8351}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Silmoon.AspNetCore.Encryption", "..\Silmoon.AspNetCore\Silmoon.AspNetCore.Encryption\Silmoon.AspNetCore.Encryption.csproj", "{DFF85336-8F22-4311-B1F9-A839B174B7DC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -28,6 +30,10 @@ Global
 		{0ECBA900-A4A3-4AB9-A38F-FE1E7AFB8351}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0ECBA900-A4A3-4AB9-A38F-FE1E7AFB8351}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0ECBA900-A4A3-4AB9-A38F-FE1E7AFB8351}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DFF85336-8F22-4311-B1F9-A839B174B7DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DFF85336-8F22-4311-B1F9-A839B174B7DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DFF85336-8F22-4311-B1F9-A839B174B7DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DFF85336-8F22-4311-B1F9-A839B174B7DC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

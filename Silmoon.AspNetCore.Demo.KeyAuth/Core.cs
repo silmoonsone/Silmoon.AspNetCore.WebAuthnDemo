@@ -4,6 +4,7 @@ using Silmoon.AspNetCore.Demo.KeyAuth.Models.SubModels;
 using Silmoon.Data.LiteDB;
 using Silmoon.Extension;
 using Silmoon.Models;
+using System.Formats.Asn1;
 
 namespace Silmoon.AspNetCore.Demo.KeyAuth
 {
@@ -75,6 +76,32 @@ namespace Silmoon.AspNetCore.Demo.KeyAuth
                 Sets<UserAuthInfo>(x => new UserAuthInfo() { WebAuthnInfos = userAuthInfo.WebAuthnInfos }, x => x.UserObjectId == UserObjectId);
                 return true.ToStateSet();
             }
+        }
+
+
+        public static byte[] ConvertToSubjectPublicKeyInfo(byte[] x, byte[] y)
+        {
+            // Create the EC point format (0x04 || X || Y) for uncompressed format
+            byte[] ecPoint = new byte[1 + x.Length + y.Length];
+            ecPoint[0] = 0x04; // Uncompressed point indicator
+            Buffer.BlockCopy(x, 0, ecPoint, 1, x.Length);
+            Buffer.BlockCopy(y, 0, ecPoint, 1 + x.Length, y.Length);
+
+            var writer = new AsnWriter(AsnEncodingRules.DER);
+            writer.PushSequence();
+
+            // AlgorithmIdentifier SEQUENCE
+            writer.PushSequence();
+            writer.WriteObjectIdentifier("1.2.840.10045.2.1"); // id-ecPublicKey OID
+            writer.WriteObjectIdentifier("1.2.840.10045.3.1.7"); // prime256v1 OID
+            writer.PopSequence();
+
+            // PublicKey BIT STRING
+            writer.WriteBitString(ecPoint);
+
+            writer.PopSequence();
+
+            return writer.Encode();
         }
     }
 }

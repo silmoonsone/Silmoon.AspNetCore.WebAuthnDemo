@@ -1,4 +1,8 @@
 using Silmoon.AspNetCore.Demo.KeyAuth;
+using Silmoon.AspNetCore.Demo.KeyAuth.Services;
+using Silmoon.AspNetCore.Encryption.Extensions;
+using Silmoon.AspNetCore.Encryption.Services;
+using Silmoon.AspNetCore.Encryption.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,6 +11,7 @@ builder.Services.AddRazorPages();
 builder.Services.AddControllers().AddNewtonsoftJson();
 builder.Services.AddAuthentication().AddCookie();
 builder.Services.AddSingleton<Core>();
+builder.Services.AddWebAuthn<WebAuthnServiceImpl>();
 
 var app = builder.Build();
 
@@ -22,6 +27,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+app.UseWebAuthn();
 
 app.UseAuthorization();
 
