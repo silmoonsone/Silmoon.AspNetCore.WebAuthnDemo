@@ -28,11 +28,11 @@ namespace Silmoon.AspNetCore.Demo.KeyAuth.Services
             {
                 Name = user.Username,
                 DisplayName = $"{user.Username}({user.Nickname})",
-                Id = Convert.ToBase64String(user._id.ToByteArray()),
+                Id = user._id.ToByteArray(),
             };
             return Task.FromResult(result);
         }
-        public override Task<StateSet<bool>> OnCreateWebAuthn(HttpContext httpContext, AttestationObjectData attestationObjectData, string clientDataJSON, byte[] attestationObjectByteArray, string authenticatorAttachment)
+        public override Task<StateSet<bool>> OnCreate(HttpContext httpContext, AttestationObjectData attestationObjectData, string clientDataJSON, byte[] attestationObjectByteArray, string authenticatorAttachment)
         {
             var sessionUserObjectId = ObjectId.Parse(httpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier).Value);
             var user = Core.GetUser(sessionUserObjectId);
@@ -55,7 +55,7 @@ namespace Silmoon.AspNetCore.Demo.KeyAuth.Services
                 return Task.FromResult(result);
             }
         }
-        public override Task<StateSet<bool>> OnDeleteWebAuthn(HttpContext httpContext, byte[] credentialId)
+        public override Task<StateSet<bool>> OnDelete(HttpContext httpContext, byte[] credentialId)
         {
             var sessionUserObjectId = ObjectId.Parse(httpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier).Value);
             var user = Core.GetUser(sessionUserObjectId);
@@ -77,11 +77,7 @@ namespace Silmoon.AspNetCore.Demo.KeyAuth.Services
             var userObjectId = ObjectId.Parse(userId);
             var userWebAuthnInfos = Core.GetUserWebAuthnInfos(userObjectId);
             var credential = userWebAuthnInfos.FirstOrDefault(c => c.CredentialId.SequenceEqual(rawId));
-            PublicKeyInfo publicKeyInfo = new PublicKeyInfo()
-            {
-                PublicKey = credential.PublicKey,
-                PublicKeyAlgorithm = credential.PublicKeyAlgorithm,
-            };
+            PublicKeyInfo publicKeyInfo = new PublicKeyInfo() { PublicKey = credential.PublicKey, PublicKeyAlgorithm = credential.PublicKeyAlgorithm, };
             return Task.FromResult(publicKeyInfo);
         }
         public override Task<AllowUserCredential> GetAllowCredentials(HttpContext httpContext, string userId)
@@ -91,11 +87,7 @@ namespace Silmoon.AspNetCore.Demo.KeyAuth.Services
 
             var allowUserCerdential = new AllowUserCredential()
             {
-                Credentials = userWebAuthnInfos.Select(c => new Credential()
-                {
-                    Id = Convert.ToBase64String(c.CredentialId),
-                    Type = "public-key"
-                }).ToArray(),
+                Credentials = userWebAuthnInfos.Select(c => new Credential() { Id = Convert.ToBase64String(c.CredentialId), }).ToArray(),
                 UserId = userObjectId.ToString(),
             };
             return Task.FromResult(allowUserCerdential);

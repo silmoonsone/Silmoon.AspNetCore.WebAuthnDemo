@@ -1,6 +1,5 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
-using Silmoon.AspNetCore.Demo.KeyAuth.Models.SubModels;
 using Silmoon.Data.MongoDB.Converters;
 using Silmoon.Data.MongoDB.Models;
 using Silmoon.Extension.Models.Identities;
