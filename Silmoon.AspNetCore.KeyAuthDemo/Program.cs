@@ -1,8 +1,8 @@
-using Silmoon.AspNetCore.Demo.KeyAuth;
-using Silmoon.AspNetCore.Demo.KeyAuth.Services;
 using Silmoon.AspNetCore.Encryption.Extensions;
 using Silmoon.AspNetCore.Encryption.Services;
 using Silmoon.AspNetCore.Encryption.Services.Interfaces;
+using Silmoon.AspNetCore.KeyAuthDemo;
+using Silmoon.AspNetCore.KeyAuthDemo.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 

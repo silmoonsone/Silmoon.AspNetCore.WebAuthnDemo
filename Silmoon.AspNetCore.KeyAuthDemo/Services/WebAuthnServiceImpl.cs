@@ -1,7 +1,5 @@
 ﻿using Microsoft.Extensions.Options;
 using MongoDB.Bson;
-using Newtonsoft.Json.Linq;
-using Silmoon.AspNetCore.Demo.KeyAuth.Models;
 using Silmoon.AspNetCore.Encryption.ClientModels;
 using Silmoon.AspNetCore.Encryption.Models;
 using Silmoon.AspNetCore.Encryption.Services;
@@ -9,7 +7,7 @@ using Silmoon.Extension;
 using Silmoon.Models;
 using System.Security.Claims;
 
-namespace Silmoon.AspNetCore.Demo.KeyAuth.Services
+namespace Silmoon.AspNetCore.KeyAuthDemo.Services
 {
     public class WebAuthnServiceImpl : WebAuthnService
     {

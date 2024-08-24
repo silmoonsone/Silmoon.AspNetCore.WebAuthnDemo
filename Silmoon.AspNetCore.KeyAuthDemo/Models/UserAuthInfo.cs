@@ -1,8 +1,8 @@
 ﻿using MongoDB.Bson;
-using Silmoon.AspNetCore.Demo.KeyAuth.Models.SubModels;
+using Silmoon.AspNetCore.KeyAuthDemo.Models.SubModels;
 using Silmoon.Data.MongoDB;
 
-namespace Silmoon.AspNetCore.Demo.KeyAuth.Models
+namespace Silmoon.AspNetCore.KeyAuthDemo.Models
 {
     public class UserAuthInfo : IdObject
     {

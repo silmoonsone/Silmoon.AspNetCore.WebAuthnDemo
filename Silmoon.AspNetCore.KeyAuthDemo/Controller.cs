@@ -7,7 +7,7 @@ using MongoDB.Bson;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using PeterO.Cbor;
-using Silmoon.AspNetCore.Demo.KeyAuth.Models;
+using Silmoon.AspNetCore.KeyAuthDemo.Models;
 using Silmoon.AspNetCore.Encryption;
 using Silmoon.AspNetCore.Encryption.ClientModels;
 using Silmoon.AspNetCore.Extensions;
@@ -18,7 +18,7 @@ using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace Silmoon.AspNetCore.Demo.KeyAuth
+namespace Silmoon.AspNetCore.KeyAuthDemo
 {
     public class Controller : Microsoft.AspNetCore.Mvc.Controller
     {

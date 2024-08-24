@@ -1,7 +1,9 @@
 ﻿@page
-@using Silmoon.AspNetCore.Demo.KeyAuth.Models.SubModels
+@using Microsoft.AspNetCore.Authorization
 @using Silmoon.Extension
-@model Silmoon.AspNetCore.Demo.KeyAuth.Pages.UserModel
+@using Silmoon.AspNetCore.KeyAuthDemo.Models.SubModels
+@attribute [Authorize]
+@model UserModel
 @{
     ViewData["Title"] = "User";
     UserWebAuthnInfo[] userWebAuthnInfos = ViewBag.UserWebAuthnInfos as UserWebAuthnInfo[];

@@ -1,6 +1,6 @@
 ﻿using Silmoon.AspNetCore.Encryption.Models;
 
-namespace Silmoon.AspNetCore.Demo.KeyAuth.Models.SubModels
+namespace Silmoon.AspNetCore.KeyAuthDemo.Models.SubModels
 {
     public class UserWebAuthnInfo : PublicKeyInfo
     {

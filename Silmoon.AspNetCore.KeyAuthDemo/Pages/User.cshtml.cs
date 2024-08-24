@@ -1,10 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using MongoDB.Bson;
-using Silmoon.AspNetCore.Demo.KeyAuth.Models.SubModels;
+using Silmoon.AspNetCore.KeyAuthDemo.Models.SubModels;
 using System.Security.Claims;
 
-namespace Silmoon.AspNetCore.Demo.KeyAuth.Pages
+namespace Silmoon.AspNetCore.KeyAuthDemo.Pages
 {
     public class UserModel : PageModel
     {

@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace Silmoon.AspNetCore.Demo.KeyAuth.Pages
+namespace Silmoon.AspNetCore.KeyAuthDemo.Pages
 {
-    public class SigninModel : PageModel
+    public class SignupModel : PageModel
     {
         public void OnGet()
         {

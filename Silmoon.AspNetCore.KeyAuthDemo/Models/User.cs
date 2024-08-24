@@ -5,7 +5,7 @@ using Silmoon.Data.MongoDB.Models;
 using Silmoon.Extension.Models.Identities;
 using Silmoon.Extension.Models.Identities.Enums;
 
-namespace Silmoon.AspNetCore.Demo.KeyAuth.Models
+namespace Silmoon.AspNetCore.KeyAuthDemo.Models
 {
     public class User : IDefaultUserIdentity, IIdObject, ICreatedAt
     {

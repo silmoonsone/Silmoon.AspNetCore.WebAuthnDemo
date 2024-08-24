@@ -1,12 +1,12 @@
 ﻿using MongoDB.Bson;
-using Silmoon.AspNetCore.Demo.KeyAuth.Models;
-using Silmoon.AspNetCore.Demo.KeyAuth.Models.SubModels;
+using Silmoon.AspNetCore.KeyAuthDemo.Models;
+using Silmoon.AspNetCore.KeyAuthDemo.Models.SubModels;
 using Silmoon.Data.LiteDB;
 using Silmoon.Extension;
 using Silmoon.Models;
 using System.Formats.Asn1;
 
-namespace Silmoon.AspNetCore.Demo.KeyAuth
+namespace Silmoon.AspNetCore.KeyAuthDemo
 {
     public class Core : LiteDBService
     {
@@ -54,9 +54,9 @@ namespace Silmoon.AspNetCore.Demo.KeyAuth
         }
         public StateSet<bool> AddUserWebAuthnInfo(ObjectId UserObjectId, UserWebAuthnInfo userWebAuthnInfo)
         {
-            var userAuthInfo = GetUserAuthInfo(UserObjectId);
             if (GetUserWebAuthnInfo(UserObjectId, userWebAuthnInfo.CredentialId) is null)
             {
+                var userAuthInfo = GetUserAuthInfo(UserObjectId);
                 userAuthInfo.WebAuthnInfos.Add(userWebAuthnInfo);
                 Sets<UserAuthInfo>(x => new UserAuthInfo() { WebAuthnInfos = userAuthInfo.WebAuthnInfos }, x => x.UserObjectId == UserObjectId);
                 return true.ToStateSet();
